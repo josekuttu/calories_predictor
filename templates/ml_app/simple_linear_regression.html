@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load ml_filters %}
+
+{% block title %}Calorie Burn - Simple Linear Regression{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mb-5">
+    <div class="col-md-8 text-center">
+        <h1 class="display-4 mb-4">Calorie Burn Prediction</h1>
+        <p class="lead text-muted">Predict calories burned based on exercise duration using simple linear regression</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title h4 mb-4">
+                    <i class="fas fa-chart-bar me-2"></i>Enter Exercise Details
+                </h2>
+                <form method="post" class="mt-4">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="mb-4">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}
+                        <div class="form-text">{{ field.help_text }}</div>
+                        {% endif %}
+                        {% if field.errors %}
+                        <div class="alert alert-danger">
+                            {{ field.errors }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-calculator me-2"></i>Predict Calories
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card example-card">
+            <div class="card-body">
+                <h2 class="card-title h4 mb-4">
+                    <i class="fas fa-lightbulb me-2"></i>Example Values
+                </h2>
+                <p class="card-text">Here are some example durations you can try:</p>
+                <ul>
+                    <li>30 minutes</li>
+                    <li>45 minutes</li>
+                    <li>60 minutes</li>
+                </ul>
+                <div class="alert alert-info mt-4">
+                    <i class="fas fa-info-circle me-2"></i>
+                    The model will predict calories burned based on exercise duration.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if prediction is not None %}
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="prediction-result">
+            <h4 class="mb-4">
+                <i class="fas fa-chart-bar me-2"></i>Prediction Result
+            </h4>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="lead mb-0">Estimated Calories Burned:</p>
+                    <h3 class="display-6 text-primary">
+                        {{ prediction|floatformat:1 }} kcal
+                    </h3>
+                </div>
+                <div class="col-md-6">
+                    <div class="progress" style="height: 30px;">
+                        <div class="progress-bar bg-primary" 
+                             role="progressbar" 
+                             style="width: {{ prediction|divide:10 }}%"
+                             aria-valuenow="{{ prediction|divide:10 }}" 
+                             aria-valuemin="0" 
+                             aria-valuemax="100">
+                            {{ prediction|floatformat:1 }} kcal
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %} 

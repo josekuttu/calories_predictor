@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Calorie Burn - Logistic Regression{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mb-5">
+    <div class="col-md-8 text-center">
+        <h1 class="display-4 mb-4">Calorie Burn Classification</h1>
+        <p class="lead text-muted">Classify your exercise session as high or low calorie burn using logistic regression</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title h4 mb-4">
+                    <i class="fas fa-project-diagram me-2"></i>Enter Exercise Details
+                </h2>
+                <form method="post" class="mt-4">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="mb-4">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}
+                        <div class="form-text">{{ field.help_text }}</div>
+                        {% endif %}
+                        {% if field.errors %}
+                        <div class="alert alert-danger">
+                            {{ field.errors }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-calculator me-2"></i>Classify
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card example-card">
+            <div class="card-body">
+                <h2 class="card-title h4 mb-4">
+                    <i class="fas fa-lightbulb me-2"></i>Example Values
+                </h2>
+                <p class="card-text">Here are some example values you can try:</p>
+                <ul>
+                    <li>Duration: 30 min, Intensity: 7, Weight: 70 kg, Age: 30</li>
+                    <li>Duration: 45 min, Intensity: 8, Weight: 75 kg, Age: 35</li>
+                    <li>Duration: 60 min, Intensity: 9, Weight: 80 kg, Age: 40</li>
+                </ul>
+                <div class="alert alert-info mt-4">
+                    <i class="fas fa-info-circle me-2"></i>
+                    The model will classify your exercise session as high or low calorie burn based on all input factors.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if prediction is not None %}
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="prediction-result">
+            <h4 class="mb-4">
+                <i class="fas fa-chart-bar me-2"></i>Classification Result
+            </h4>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="lead mb-0">Exercise Session:</p>
+                    <h3 class="display-6 {% if prediction %}text-success{% else %}text-warning{% endif %}">
+                        {{ prediction|yesno:"High Calorie Burn,Low Calorie Burn" }}
+                    </h3>
+                </div>
+                {% if probability is not None %}
+                <div class="col-md-6">
+                    <p class="lead mb-0">Confidence Level:</p>
+                    <div class="progress" style="height: 30px;">
+                        <div class="progress-bar {% if prediction %}bg-success{% else %}bg-warning{% endif %}" 
+                             role="progressbar" 
+                             style="width: {{ probability }}%"
+                             aria-valuenow="{{ probability }}" 
+                             aria-valuemin="0" 
+                             aria-valuemax="100">
+                            {{ probability|floatformat:1 }}%
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %} 

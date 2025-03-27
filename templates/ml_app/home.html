@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}ML Calorie Predictor - Home{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mb-5">
+    <div class="col-md-8 text-center">
+        <h1 class="display-4 mb-4">ML Calorie Predictor</h1>
+        <p class="lead text-muted">Predict your calorie burn using various machine learning algorithms</p>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <div class="mb-4">
+                    <i class="fas fa-chart-line fa-3x text-primary"></i>
+                </div>
+                <h3 class="card-title h4">Polynomial Regression</h3>
+                <p class="card-text">Predict calories burned using polynomial regression with duration and intensity.</p>
+                <a href="{% url 'polynomial_regression' %}" class="btn btn-primary">Try Now</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <div class="mb-4">
+                    <i class="fas fa-users fa-3x text-primary"></i>
+                </div>
+                <h3 class="card-title h4">K-Nearest Neighbors</h3>
+                <p class="card-text">Classify exercise sessions as high or low calorie burn using KNN algorithm.</p>
+                <a href="{% url 'knn' %}" class="btn btn-primary">Try Now</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <div class="mb-4">
+                    <i class="fas fa-chart-bar fa-3x text-primary"></i>
+                </div>
+                <h3 class="card-title h4">Simple Linear Regression</h3>
+                <p class="card-text">Predict calories burned based on exercise duration using simple linear regression.</p>
+                <a href="{% url 'simple_linear_regression' %}" class="btn btn-primary">Try Now</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <div class="mb-4">
+                    <i class="fas fa-chart-pie fa-3x text-primary"></i>
+                </div>
+                <h3 class="card-title h4">Multiple Linear Regression</h3>
+                <p class="card-text">Predict calories burned using multiple features including duration, intensity, weight, and age.</p>
+                <a href="{% url 'multiple_linear_regression' %}" class="btn btn-primary">Try Now</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <div class="mb-4">
+                    <i class="fas fa-project-diagram fa-3x text-primary"></i>
+                </div>
+                <h3 class="card-title h4">Logistic Regression</h3>
+                <p class="card-text">Classify exercise sessions as high or low calorie burn using logistic regression.</p>
+                <a href="{% url 'logistic_regression' %}" class="btn btn-primary">Try Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-12">
+        <div class="card example-card">
+            <div class="card-body">
+                <h5 class="card-title mb-4">
+                    <i class="fas fa-info-circle me-2"></i>How to Use
+                </h5>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6 class="mb-3">1. Choose an Algorithm</h6>
+                        <p>Select the machine learning algorithm that best suits your needs.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="mb-3">2. Enter Your Data</h6>
+                        <p>Input your exercise details such as duration, intensity, weight, and age.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="mb-3">3. Get Results</h6>
+                        <p>View your predicted calorie burn or classification result.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
